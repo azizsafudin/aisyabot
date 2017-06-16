@@ -21,7 +21,7 @@ class BotManController extends Controller
             $bot->reply('Hi there :)');
         });
 
-        $botman->listen();
+        return 1;
     }
 
     /**
