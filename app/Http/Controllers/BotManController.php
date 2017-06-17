@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Mpociot\BotMan\Middleware\Wit;
 
 use App\Conversations\ExampleConversation;
 use Illuminate\Http\Request;
