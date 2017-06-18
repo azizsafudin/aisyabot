@@ -36,16 +36,16 @@ class BotManController extends Controller
     {
         $bot->startConversation(new Introduction());
     }
-    public function getPsiApi(){
-        $today = Carbon::createFromFormat('Y-m-d', Carbon::today(), 'Asia/Singapore');
-        $client = new Client();
-        $uri = 'https://api.data.gov.sg/v1/environment/psi';
-        $response = $client->request('GET', $uri, [
-            'query' => ['date' => $today],
-            'headers' => ['api-key' => env('DATA_GOV_API_KEY')]
-        ]);
-        $results = json_decode($response->getBody()->getContents(), true);
-        $latestpsi = $results['items'][20]['readings']['psi_twenty_four_hourly']['national'];
-        return $latestpsi;
-    }
+//    public function getPsiApi(){
+//        $today = Carbon::createFromFormat('Y-m-d', Carbon::today(), 'Asia/Singapore');
+//        $client = new Client();
+//        $uri = 'https://api.data.gov.sg/v1/environment/psi';
+//        $response = $client->request('GET', $uri, [
+//            'query' => ['date' => $today],
+//            'headers' => ['api-key' => env('DATA_GOV_API_KEY')]
+//        ]);
+//        $results = json_decode($response->getBody()->getContents(), true);
+//        $latestpsi = $results['items'][20]['readings']['psi_twenty_four_hourly']['national'];
+//        return $latestpsi;
+//    }
 }

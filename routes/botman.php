@@ -6,14 +6,16 @@ use Mpociot\BotMan\Middleware\Wit;
 $botman = resolve('botman');
 $middleware = Wit::create(env('WIT_AI_ACCESS_TOKEN'));
 
-$botman->hears('get_psi', function($bot){
-    $latestpsi = $this->getPsiApi();
-    $bot->reply('The latest 24 hourly PSI is '.$latestpsi.'.');
-});
-
 $botman->hears('salam', function($bot){
     $bot->reply("Wa'alaikumussalam! How can I help you today?");
 });
+
+$botman->hears('get_random_number', function($bot){
+    $rand = rand();
+    $bot->reply("Sure, is ".$rand." ok?");
+});
+
+
 //for now start_conversation and set_intro does the same thing. Change in the future.
 $botman->hears('start_conversation', BotManController::class.'@introConversation')->middleware($middleware);
 
