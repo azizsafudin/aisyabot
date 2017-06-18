@@ -1,16 +1,16 @@
 <?php
 use App\Http\Controllers\BotManController;
 use Mpociot\BotMan\Middleware\Wit;
-
+use Mpociot\BotMan\BotMan;
 // Don't use the Facade in here to support the RTM API too :)
 $botman = resolve('botman');
 $middleware = Wit::create(env('WIT_AI_ACCESS_TOKEN'));
 
-$botman->hears('salam', function($bot){
+$botman->hears('salam', function(Botman $bot){
     $bot->reply("Wa'alaikumussalam! How can I help you today?");
 });
 
-$botman->hears('get_random_number', function($bot){
+$botman->hears('get_random_number', function(Botman $bot){
     $bot->reply("Sure, is ".rand()." ok?");
 });
 
