@@ -1,12 +1,17 @@
 <?php
 use App\Http\Controllers\BotManController;
 use Mpociot\BotMan\Middleware\Wit;
+use App\User;
 
 // Don't use the Facade in here to support the RTM API too :)
 $botman = resolve('botman');
 $middleware = Wit::create(env('WIT_AI_ACCESS_TOKEN'));
 
 $botman->hears('salam', function($bot){
+    $user = $bot->getUser();
+
+    User::
+
     $bot->reply("Wa'alaikumussalam!");
 });
 

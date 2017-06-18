@@ -22,12 +22,6 @@ class BotManController extends Controller
 
         $middleware = Wit::create(env('WIT_AI_ACCESS_TOKEN'));
 
-        // Simple respond method
-        $botman->hears('hello', function (BotMan $bot) {
-            $bot->typesAndWaits(3);
-            $bot->reply('Hi there :)');
-        })->middleware($middleware);
-
         $botman->listen();
         return response()->json(['message' =>'success']);
     }

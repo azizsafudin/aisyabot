@@ -10,7 +10,8 @@
         "mpociot/botman": "~1.0",
         "mpociot/slack-client": "^0.2.6",
         "clue/stdio-react": "^1.0",
-        "mpociot/botman-tinker": "^0.1.1"
+        "mpociot/botman-tinker": "^0.1.1",
+        "alsofronie/eloquent-uuid": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
