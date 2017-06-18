@@ -22,10 +22,7 @@ class BotManController extends Controller
     	//$botman->middleware(Wit::create(env('WIT_AI_ACCESS_TOKEN')));
 
         $middleware = Wit::create(env('WIT_AI_ACCESS_TOKEN'));
-        $botman->hears('get_psi', function($bot){
-            $latestpsi = $this->getPsiApi();
-            $bot->reply('The latest 24 hourly PSI is '.$latestpsi.'.');
-        });
+
 
         $botman->listen();
         return response()->json(['message' =>'success']);
