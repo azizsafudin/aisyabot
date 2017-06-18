@@ -6,6 +6,8 @@ use Mpociot\BotMan\Middleware\Wit;
 use App\Conversations\Introduction;
 use Illuminate\Http\Request;
 use Mpociot\BotMan\BotMan;
+use GuzzleHttp\Client;
+use Carbon\Carbon;
 
 class BotManController extends Controller
 {
@@ -20,7 +22,10 @@ class BotManController extends Controller
     	//$botman->middleware(Wit::create(env('WIT_AI_ACCESS_TOKEN')));
 
         $middleware = Wit::create(env('WIT_AI_ACCESS_TOKEN'));
-        $botman->hears('get_psi', BotCommands::class.'@getPsi');
+        $botman->hears('get_psi', function($bot){
+            $latestpsi = $this->getPsiApi();
+            $bot->reply('The latest 24 hourly PSI is '.$latestpsi.'.');
+        });
 
         $botman->listen();
         return response()->json(['message' =>'success']);
@@ -33,5 +38,17 @@ class BotManController extends Controller
     public function introConversation(BotMan $bot)
     {
         $bot->startConversation(new Introduction());
+    }
+    public function getPsiApi(){
+        $today = Carbon::createFromFormat('Y-m-d', Carbon::today(), 'Asia/Singapore');
+        $client = new Client();
+        $uri = 'https://api.data.gov.sg/v1/environment/psi';
+        $response = $client->request('GET', $uri, [
+            'query' => ['date' => $today],
+            'headers' => ['api-key' => env('DATA_GOV_API_KEY')]
+        ]);
+        $results = json_decode($response->getBody()->getContents(), true);
+        $latestpsi = $results['items'][20]['readings']['psi_twenty_four_hourly']['national'];
+        return $latestpsi;
     }
 }
