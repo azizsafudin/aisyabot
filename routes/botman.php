@@ -7,14 +7,6 @@ use App\User;
 $botman = resolve('botman');
 $middleware = Wit::create(env('WIT_AI_ACCESS_TOKEN'));
 
-$botman->hears('salam', function($bot){
-    $user = $bot->getUser();
-
-    User::
-
-    $bot->reply("Wa'alaikumussalam!");
-});
-
 //for now start_conversation and set_intro does the same thing. Change in the future.
 $botman->hears('start_conversation', BotManController::class.'@introConversation')->middleware($middleware);
 
