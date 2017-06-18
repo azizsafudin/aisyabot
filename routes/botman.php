@@ -11,8 +11,7 @@ $botman->hears('salam', function($bot){
 });
 
 $botman->hears('get_random_number', function($bot){
-    $rand = rand();
-    $bot->reply("Sure, is ".$rand." ok?");
+    $bot->reply("Sure, is ".rand()." ok?");
 });
 
 
