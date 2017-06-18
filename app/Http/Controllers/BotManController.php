@@ -16,6 +16,8 @@ class BotManController extends Controller
     public function handle()
     {
     	$botman = app('botman');
+        $botman->middleware(Wit::create(env('WIT_AI_ACCESS_TOKEN')));
+
         $botman->verifyServices(env('TOKEN_VERIFY'));
 
         // Simple respond method
@@ -24,7 +26,7 @@ class BotManController extends Controller
         });
 
         $botman->listen();
-        return 1;
+        return response()->json(['message' =>'success']);
     }
 
     /**
