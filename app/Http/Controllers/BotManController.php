@@ -16,27 +16,22 @@ class BotManController extends Controller
     public function handle()
     {
     	$botman = app('botman');
-        $botman->middleware(Wit::create(env('WIT_AI_ACCESS_TOKEN')));
 
-        $botman->verifyServices(env('TOKEN_VERIFY'));
+    	//Uncomment to set all hears to wit.ai middleware
+    	//$botman->middleware(Wit::create(env('WIT_AI_ACCESS_TOKEN')));
+
+        $middleware = Wit::create(env('WIT_AI_ACCESS_TOKEN'));
 
         // Simple respond method
-        $botman->hears('Hello', function (BotMan $bot) {
+        $botman->hears('hello', function (BotMan $bot) {
+            $bot->typesAndWaits(3);
             $bot->reply('Hi there :)');
-        });
+        })->middleware($middleware);
 
         $botman->listen();
         return response()->json(['message' =>'success']);
     }
 
-    /**
-     * Loaded through routes/botman.php
-     * @param  BotMan $bot
-     */
-    public function startConversation(BotMan $bot)
-    {
-        $bot->startConversation(new ExampleConversation());
-    }
     /**
      * Loaded through routes/botman.php
      * @param  BotMan $bot
