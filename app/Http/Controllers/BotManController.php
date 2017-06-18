@@ -20,7 +20,7 @@ class BotManController extends Controller
     	//$botman->middleware(Wit::create(env('WIT_AI_ACCESS_TOKEN')));
 
         $middleware = Wit::create(env('WIT_AI_ACCESS_TOKEN'));
-        $botman->hears('who_am_i', BotCommands::class.'@getName');
+        $botman->hears('get_psi', BotCommands::class.'@getPsi');
 
         $botman->listen();
         return response()->json(['message' =>'success']);
