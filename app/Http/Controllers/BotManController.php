@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 use Mpociot\BotMan\Middleware\Wit;
 
-use App\Conversations\ExampleConversation;
 use App\Conversations\Introduction;
 use Illuminate\Http\Request;
 use Mpociot\BotMan\BotMan;
@@ -21,21 +20,8 @@ class BotManController extends Controller
     	//$botman->middleware(Wit::create(env('WIT_AI_ACCESS_TOKEN')));
 
         $middleware = Wit::create(env('WIT_AI_ACCESS_TOKEN'));
-        $botman->hears('salam', function($bot){
-            $user = $bot->getUser();
+        $botman->hears('who_am_i', BotCommands::class.'@getName');
 
-            $localuser = User::where('telegram_id', $user->getId())->first();
-
-            if(!$localuser){
-                User::create([
-                    'telegram_id' => $user->getId(),
-                    'name' => $user->getFirstName().' '.$user->getLastName(),
-                    'username' => $user->getUsername(),
-                ]);
-            }
-
-            $bot->reply("Wa'alaikumussalam!");
-        });
         $botman->listen();
         return response()->json(['message' =>'success']);
     }

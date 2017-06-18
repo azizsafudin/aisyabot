@@ -1,7 +1,6 @@
 <?php
 use App\Http\Controllers\BotManController;
 use Mpociot\BotMan\Middleware\Wit;
-use App\User;
 
 // Don't use the Facade in here to support the RTM API too :)
 $botman = resolve('botman');

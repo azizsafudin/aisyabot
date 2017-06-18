@@ -33,9 +33,6 @@ class Introduction extends Conversation
             ->fallback('Unable to ask question')
             ->callbackId('ask_intro');
 
-        $data = array($this->name, $this->intro);
-        $user = User::create($data);
-
         return $this->ask($question, function (Answer $answer){
             $this->say('I see, I shall remember your information!');
         });
