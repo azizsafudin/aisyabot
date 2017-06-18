@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Mpociot\BotMan\BotMan;
 use GuzzleHttp\Client;
 
-class BotCommands extends Controller
+class BotCommands extends BotmanController
 {
     public function getPsi($bot){
         $latestpsi = $this->getPsiApi();
