@@ -2,23 +2,29 @@
 use App\Http\Controllers\BotManController;
 use Mpociot\BotMan\Middleware\Wit;
 use Mpociot\BotMan\BotMan;
+use App\Conversations\Introduction;
+use App\Conversations\RandomNumberConversation;
+
 // Don't use the Facade in here to support the RTM API too :)
 $botman = resolve('botman');
 $middleware = Wit::create(env('WIT_AI_ACCESS_TOKEN'));
 
+//This block of commands uses NLP
+
 $botman->hears('salam', function(Botman $bot){
     $bot->reply("Wa'alaikumussalam! How can I help you today?");
+    $bot->startConversation(new Introduction());
+
 })->middleware($middleware);
 
 $botman->hears('get_random_number', function(Botman $bot){
-    $bot->reply("Sure, is ".rand()." ok?");
+    $bot->startConversation(new RandomNumberConversation());
 })->middleware($middleware);
 
 $botman->hears('who_am_i', function(Botman $bot){
     $user = $bot->userStorage()->get();
-
     if ($user->has('name')) {
-        $bot->reply('You are '.$user->get('name'));
+        $bot->reply('Your name is '.$user->get('name'));
     } else {
         $bot->reply('I do not know you yet.');
     }
@@ -29,13 +35,29 @@ $botman->hears("my_name_is", function (BotMan $bot) {
     // You can also pass a user-id / key as a second parameter.
     $extras   = $bot->getMessage()->getExtras();
     $entities = $extras['entities'];
-    $name = $entities['contact'][0]['value'];
-    $bot->userStorage()->save([
-        'name' => $name
-    ]);
+    try {
+        $name = $entities['contact'][0]['value'];
+        $bot->userStorage()->save([
+            'name' => $name
+        ]);
+    }
+    catch(\Exception $e){
+        $bot->reply("Sorry I didn't catch your name.");
+    }
 
     $bot->reply('I will call you '.$name);
 })->middleware($middleware);
+
+
+//This block of commands are good old fashioned bot commands
+
+$botman->hears("/forgetme", function(Botman $bot){
+    $bot->userStorage()->delete();
+    $bot->reply("Ok, I've forgotten everything about you.");
+});
+
+
+
 
 //for now start_conversation and set_intro does the same thing. Change in the future.
 $botman->hears('start_conversation', BotManController::class.'@introConversation')->middleware($middleware);
