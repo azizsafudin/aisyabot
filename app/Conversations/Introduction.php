@@ -2,11 +2,9 @@
 
 namespace App\Conversations;
 
-use Illuminate\Foundation\Inspiring;
 use Mpociot\BotMan\Answer;
 use Mpociot\BotMan\Conversation;
 use Mpociot\BotMan\Question;
-use App\User;
 
 class Introduction extends Conversation
 {
@@ -19,7 +17,7 @@ class Introduction extends Conversation
      */
     public function askName()
     {
-        $question = Question::create('Hi, what is your name?')
+        $question = Question::create('What is your name?')
             ->fallback('Unable to ask question')
             ->callbackId('ask_name');
 

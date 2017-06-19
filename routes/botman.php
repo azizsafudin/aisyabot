@@ -12,8 +12,11 @@ $middleware = Wit::create(env('WIT_AI_ACCESS_TOKEN'));
 //This block of commands uses NLP
 
 $botman->hears('salam', function(Botman $bot){
-    $bot->reply("Wa'alaikumussalam! How can I help you today?");
-    $bot->startConversation(new Introduction());
+    $bot->reply("Wa'alaikumussalam!");
+    $name = $bot->userStorage()->get('name');
+    if(is_null($name) || isEmpty($name) || !isset($name)) {
+        $bot->startConversation(new Introduction());
+    }
 
 })->middleware($middleware);
 
@@ -27,6 +30,7 @@ $botman->hears('who_am_i', function(Botman $bot){
         $bot->reply('Your name is '.$user->get('name'));
     } else {
         $bot->reply('I do not know you yet.');
+        $bot->startConversation(new Introduction());
     }
 })->middleware($middleware);
 
@@ -38,7 +42,8 @@ $botman->hears("my_name_is", function (BotMan $bot) {
     try {
         $name = $entities['contact'][0]['value'];
         $bot->userStorage()->save([
-            'name' => $name
+            'name' => $name,
+            'id'   => $bot->getUser()->getId(),
         ]);
     }
     catch(\Exception $e){
@@ -56,6 +61,15 @@ $botman->hears("/forgetme", function(Botman $bot){
     $bot->reply("Ok, I've forgotten everything about you.");
 });
 
+$botman->hears("/myid", function(Botman $bot){
+    $user = $bot->userStorage()->get();
+    try{
+        $bot->reply("Your ID is: ". $user->get('id'));
+    }
+    catch(\Exception $e){
+        $bot->reply("Your ID has not been set, tell me your name.");
+    }
+});
 
 
 
