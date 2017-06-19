@@ -29,7 +29,7 @@ $botman->hears("my_name_is", function (BotMan $bot) {
     // You can also pass a user-id / key as a second parameter.
     $extras   = $bot->getMessage()->getExtras();
     $entities = $extras['entities'];
-    $name = $entities['contact']['value'];
+    $name = $entities['contact'][0]['value'];
     $bot->userStorage()->save([
         'name' => $name
     ]);
