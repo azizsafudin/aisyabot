@@ -29,11 +29,12 @@ class RandomNumberConversation extends Conversation
         ]);
         return $this->ask($question, function (Answer $answer) {
 
-         if($answer->isInteractiveMessageReply()){
-             $this->answer = $answer->getValue();
-             if($this->answer == 'yes'){
-                 $this->askNumber();
-             }
+
+            if($answer->isInteractiveMessageReply()){
+                $this->answer = $answer->getValue();
+                if($this->answer === 'yes'){
+                    $this->askNumber();
+                }
              else {
                  $this->say('Glad to be of service. :)');
              }
@@ -73,7 +74,7 @@ class RandomNumberConversation extends Conversation
 
             if($answer->isInteractiveMessageReply()){
                 $this->answer = $answer->getValue();
-                if($this->answer == 'yes'){
+                if($this->answer === 'yes'){
                     $this->askNumber();
                 }
                 else {

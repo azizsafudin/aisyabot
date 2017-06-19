@@ -31,8 +31,8 @@ $botman->hears('who_am_i', function(Botman $bot){
 })->middleware($middleware);
 
 $botman->hears("my_name_is", function (BotMan $bot) {
-    // Store information for the currently logged in user.
-    // You can also pass a user-id / key as a second parameter.
+    $bot->userStorage()->delete('name');
+
     $extras   = $bot->getMessage()->getExtras();
     $entities = $extras['entities'];
     try {
