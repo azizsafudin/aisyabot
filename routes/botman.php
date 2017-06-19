@@ -24,6 +24,19 @@ $botman->hears('who_am_i', function(Botman $bot){
     }
 })->middleware($middleware);
 
+$botman->hears("my_name_is", function (BotMan $bot) {
+    // Store information for the currently logged in user.
+    // You can also pass a user-id / key as a second parameter.
+    $extras   = $bot->getMessage()->getExtras();
+    $entities = $extras['entities'];
+    $name = $entities['contact']['value']
+    $bot->userStorage()->save([
+        'name' => $name
+    ]);
+
+    $bot->reply('I will call you '.$name);
+})->middleware($middleware);
+
 //for now start_conversation and set_intro does the same thing. Change in the future.
 $botman->hears('start_conversation', BotManController::class.'@introConversation')->middleware($middleware);
 
