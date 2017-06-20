@@ -17,17 +17,17 @@ class RandomNumberConversation extends Conversation
      */
     public function giveNumber()
     {
-        $rand = rand();
+        $rand = rand(0, 9999);
         return $this->ask('Sure, is '.$rand.' ok?', [
             [
-                'pattern' => 'yes|yep|y|yup',
+                'pattern' => 'nah|no|nope|n|nop',
                 'callback' => function () {
                     $this->say('Okay - we\'ll keep going.');
                     $this->askNumber();
                 }
             ],
             [
-                'pattern' => 'nah|no|nope|n|nop',
+                'pattern' => 'yes|yep|y|yup',
                 'callback' => function () {
                     $this->say('Awesome, glad to be able to help!');
                 }
@@ -35,17 +35,17 @@ class RandomNumberConversation extends Conversation
         ]);
     }
     public function askNumber(){
-        $rand = rand();
-        return $this->ask('Would you like another random number?', [
+        $rand = rand(0, 9999);
+        return $this->ask('What about, '.$rand.'?', [
             [
-                'pattern' => 'yes|yep|y|yup',
+                'pattern' => 'nah|no|nope|n|nop',
                 'callback' => function () {
                     $this->say('Okay - we\'ll keep going.');
                     $this->askNumber();
                 }
             ],
             [
-                'pattern' => 'nah|no|nope|n|nop',
+                'pattern' => 'yes|yep|y|yup',
                 'callback' => function () {
                     $this->say('Nice, glad to be of service!');
                 }
