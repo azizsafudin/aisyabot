@@ -18,7 +18,7 @@ class RandomNumberConversation extends Conversation
     public function giveNumber()
     {
         $rand = rand();
-        $this->ask('Sure, is '.$rand.' ok?', [
+        return $this->ask('Sure, is '.$rand.' ok?', [
             [
                 'pattern' => 'yes|yep|y|yup',
                 'callback' => function () {
@@ -36,7 +36,7 @@ class RandomNumberConversation extends Conversation
     }
     public function askNumber(){
         $rand = rand();
-        $this->ask('Would you like another random number?', [
+        return $this->ask('Would you like another random number?', [
             [
                 'pattern' => 'yes|yep|y|yup',
                 'callback' => function () {
