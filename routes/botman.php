@@ -63,11 +63,12 @@ $botman->hears("/forgetme", function(Botman $bot){
 
 $botman->hears("/myid", function(Botman $bot){
     $user = $bot->userStorage()->get();
-    try{
-        $bot->reply("Your ID is: ". $user->get('id'));
-    }
-    catch(\Exception $e){
+    $userid = $user->get('id');
+    if(!isset($userid) || empty($userid) || is_null($userid)) {
         $bot->reply("Your ID has not been set, tell me your name.");
+    }
+    else{
+        $bot->reply("Your ID is: " . $userid);
     }
 });
 
