@@ -21,8 +21,6 @@ class BotManController extends Controller
     	//Uncomment to set all hears to wit.ai middleware
     	//$botman->middleware(Wit::create(env('WIT_AI_ACCESS_TOKEN')));
 
-        $middleware = Wit::create(env('WIT_AI_ACCESS_TOKEN'));
-
 
         $botman->listen();
         return response()->json(['message' =>'success']);

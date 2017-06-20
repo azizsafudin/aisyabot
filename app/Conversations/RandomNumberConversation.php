@@ -31,6 +31,12 @@ class RandomNumberConversation extends Conversation
                 'callback' => function () {
                     $this->say('Awesome, glad to be able to help!');
                 }
+            ],
+            [
+                'pattern' => '.*',
+                'callback' => function () {
+                    $this->say('I don\'t quite understand, yes or no?');
+                }
             ]
         ]);
     }
@@ -48,6 +54,12 @@ class RandomNumberConversation extends Conversation
                 'pattern' => 'yes|yep|y|yup',
                 'callback' => function () {
                     $this->say('Nice, glad to be of service!');
+                }
+            ],
+            [
+                'pattern' => '.*',
+                'callback' => function () {
+                    $this->repeat('I don\'t quite understand, yes or no?');
                 }
             ]
         ]);

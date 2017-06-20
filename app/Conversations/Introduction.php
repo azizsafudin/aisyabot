@@ -32,7 +32,7 @@ class Introduction extends Conversation
             ->callbackId('ask_intro');
 
         return $this->ask($question, function (Answer $answer){
-            $this->say('I see, I shall remember your information!');
+            $this->say('I see, I will remember you!');
         });
     }
 
