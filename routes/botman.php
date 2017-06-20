@@ -14,7 +14,7 @@ $middleware = Wit::create(env('WIT_AI_ACCESS_TOKEN'));
 $botman->hears('salam', function(Botman $bot){
     $bot->reply("Wa'alaikumussalam!");
     $name = $bot->userStorage()->get('name');
-    if(is_null($name) || isEmpty($name) || !isset($name)) {
+    if(is_null($name) || empty($name) || !isset($name)) {
         $bot->startConversation(new Introduction());
     }
 
