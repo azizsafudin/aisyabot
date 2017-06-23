@@ -12,7 +12,6 @@ $botman = resolve('botman');
 $middleware = Wit::create(env('WIT_AI_ACCESS_TOKEN'));
 
 //This block of commands uses NLP
-
 $botman->hears('salam', function(Botman $bot){
     $bot->reply('Wa\'alaikumussalam!');
     $name = $bot->userStorage()->get('name');
@@ -61,6 +60,7 @@ $botman->hears('get_bot_info', function(BotMan $bot){
         $bot->typesAndWaits(3);
         $bot->reply('I was created by Abdul Aziz.');
         $bot->reply('Also known as, @modulus');
+
 });
 //This block of commands are good old fashioned bot commands
 

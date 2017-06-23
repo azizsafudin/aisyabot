@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Pagination\Paginator;
 use Mpociot\BotMan\Middleware\Wit;
 
 use App\Conversations\Introduction;
@@ -21,6 +22,11 @@ class BotManController extends Controller
     	//Uncomment to set all hears to wit.ai middleware
     	//$botman->middleware(Wit::create(env('WIT_AI_ACCESS_TOKEN')));
 
+        $botman->hears('get_prayertimes', function (BotMan $bot) {
+            $bot->types();
+            $results = $this->getPrayerTimes();
+            $bot->reply($results);
+        });
 
         $botman->listen();
         return response()->json(['message' =>'success']);
@@ -34,6 +40,29 @@ class BotManController extends Controller
     {
         $bot->startConversation(new Introduction());
     }
+
+    public function getPrayerTimes($source = 'muis'){
+        if($source == 'muis') {
+            $htmlcode = file_get_contents('http://http://www.muis.gov.sg/');
+            $dom = new \DOMDocument();
+            $dom->loadHTML(htmlspecialchars($htmlcode));
+            $prayertimes = [
+                $dom->GetElementById('PrayerTimeControl1_lblSubuh')->textContent => $dom->GetElementById('PrayerTimeControl1_Subuh')->textContent,
+                $dom->GetElementById('PrayerTimeControl1_lblSyuruk')->textContent => $dom->GetElementById('PrayerTimeControl1_Syuruk')->textContent,
+                $dom->GetElementById('PrayerTimeControl1_lblZohor')->textContent => $dom->GetElementById('PrayerTimeControl1_Zohor')->textContent,
+                $dom->GetElementById('PrayerTimeControl1_lblAsar')->textContent => $dom->GetElementById('PrayerTimeControl1_Asar')->textContent,
+                $dom->GetElementById('PrayerTimeControl1_lblMaghrib')->textContent => $dom->GetElementById('PrayerTimeControl1_Maghrib')->textContent,
+                $dom->GetElementById('PrayerTimeControl1_lblIsyak')->textContent =>    $dom->GetElementById('PrayerTimeControl1_Isyak')->textContent,
+            ];
+            $message =  'The prayer times for today, according to MUIS are:\n';
+            foreach ($prayertimes as $k => $v){
+                $message .= $k. ' - '.$v.'\n';
+            }
+            return $message;
+        }
+        return 'Sorry, I was unable to read prayertime data.';
+    }
+
 //    public function getPsiApi(){
 //        $today = Carbon::createFromFormat('Y-m-d', Carbon::today(), 'Asia/Singapore');
 //        $client = new Client();
