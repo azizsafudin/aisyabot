@@ -50,8 +50,8 @@ class BotManController extends Controller
             $yearly = json_decode($response->getBody()->getContents());
             $date = Carbon::today('Asia/Singapore')->format('d/m/Y');
             $prayertime = new Json();
-            foreach($yearly['events'] as $daily){
-                if ($daily['date'] == $date){
+            foreach($yearly->events as $daily){
+                if ($daily->date == $date){
                     $prayertime = $daily;
                     break;
                 }
