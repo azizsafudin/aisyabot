@@ -49,10 +49,10 @@ class BotManController extends Controller
             $response = $client->get($uri);
             $yearly = json_decode($response->getBody()->getContents());
             $date = Carbon::today('Asia/Singapore')->format('d/m/Y');
-            $prayertime = new Json();
+            $prayertime = '';
             foreach($yearly->events as $daily){
-                if ($daily->date == $date){
-                    $prayertime = $daily;
+                if ($daily->Date == $date){
+                    $prayertime = json_decode($daily);
                     break;
                 }
             }
