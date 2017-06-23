@@ -35,7 +35,7 @@ class RandomNumberConversation extends Conversation
             [
                 'pattern' => '.*',
                 'callback' => function () {
-                    $this->say('I don\'t quite understand, yes or no?');
+                    $this->say('I don\'t quite understand, is that a yes or no?');
                 }
             ]
         ]);
@@ -59,7 +59,7 @@ class RandomNumberConversation extends Conversation
             [
                 'pattern' => '.*',
                 'callback' => function () {
-                    $this->repeat('I don\'t quite understand, yes or no?');
+                    $this->repeat('Sorry, I don\'t understand, is that a yes or no?');
                 }
             ]
         ]);
