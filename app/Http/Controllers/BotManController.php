@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Mpociot\BotMan\BotMan;
 use GuzzleHttp\Client;
 use Carbon\Carbon;
+use Psy\Util\Json;
 
 class BotManController extends Controller
 {
@@ -42,6 +43,25 @@ class BotManController extends Controller
     }
 
     public function getPrayerTimes($source = 'muis'){
+        if($source == 'muis'){
+            $client = new Client();
+            $uri    = 'http://www.muis.gov.sg/js/prayertiming_data_new_2017a.js';
+            $response = $client->get($uri);
+            $yearly = json_decode($response->getBody()->getContents());
+            $datetoday = Carbon::createFromFormat('d/m/Y', Carbon::now());
+            $prayertime = new Json();
+            foreach($yearly['events'] as $daily){
+                if ($daily['date'] == $datetoday){
+                    $prayertime = $daily;
+                    break;
+                }
+            }
+            return $prayertime;
+        }
+    }
+
+
+    /*public function getPrayerTimes($source = 'muis'){
         if($source == 'muis') {
             $url = "http://www.muis.gov.sg/";
             $agent= 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.0.3705; .NET CLR 1.1.4322)';
@@ -52,7 +72,6 @@ class BotManController extends Controller
             curl_setopt($ch, CURLOPT_VERBOSE, true);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_USERAGENT, $agent);
-            curl_setopt($ch, CURLOPT_URL,$url);
             $data = curl_exec($ch);
             curl_close($ch);
             $dom = new \DOMDocument();
@@ -73,7 +92,7 @@ class BotManController extends Controller
             return $message;
         }
         return 'Sorry, I was unable to read prayertime data.';
-    }
+    }*/
 
 //    public function getPsiApi(){
 //        $today = Carbon::createFromFormat('Y-m-d', Carbon::today(), 'Asia/Singapore');
