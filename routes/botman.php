@@ -32,7 +32,6 @@ $botman->hears('who_am_i', function(Botman $bot){
         $bot->reply('Your name is '.$user->get('name'));
     } else {
         $bot->reply('I do not know you yet.');
-        $bot->startConversation(new Introduction());
     }
 })->middleware($middleware);
 

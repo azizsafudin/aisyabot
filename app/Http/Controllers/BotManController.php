@@ -26,7 +26,13 @@ class BotManController extends Controller
         $botman->hears('get_prayertimes', function (BotMan $bot) {
             $bot->types();
             $results = $this->getPrayerTimes();
-            $bot->reply($results);
+            $bot->reply('The prayer times for today are as follows:');
+            $bot->types();
+            $message= '';
+            foreach($results as $k => $v){
+                $message .= $k.' - '.$v;
+            }
+            $bot->reply($message);
         });
 
         $botman->listen();
@@ -52,7 +58,7 @@ class BotManController extends Controller
             $prayertimes = '';
             foreach($yearly->events as $daily){
                 if ($daily->Date == $date){
-                    $prayertimes = response()->json($daily);
+                    $prayertimes = $daily;
                     break;
                 }
             }
