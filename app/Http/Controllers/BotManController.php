@@ -52,7 +52,7 @@ class BotManController extends Controller
             $prayertime = '';
             foreach($yearly->events as $daily){
                 if ($daily->Date == $date){
-                    $prayertime = json_decode($daily);
+                    $prayertime = $daily;
                     break;
                 }
             }
