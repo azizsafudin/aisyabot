@@ -43,9 +43,15 @@ class BotManController extends Controller
 
     public function getPrayerTimes($source = 'muis'){
         if($source == 'muis') {
-            $htmlcode = file_get_contents('http://http://www.muis.gov.sg/');
+            $url = "http://http://www.muis.gov.sg/";
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $data = curl_exec($ch);
+            curl_close($ch);
             $dom = new \DOMDocument();
-            $dom->loadHTML(htmlspecialchars($htmlcode));
+            $dom->loadHTML(htmlspecialchars($data));
+
             $prayertimes = [
                 $dom->GetElementById('PrayerTimeControl1_lblSubuh')->textContent => $dom->GetElementById('PrayerTimeControl1_Subuh')->textContent,
                 $dom->GetElementById('PrayerTimeControl1_lblSyuruk')->textContent => $dom->GetElementById('PrayerTimeControl1_Syuruk')->textContent,
