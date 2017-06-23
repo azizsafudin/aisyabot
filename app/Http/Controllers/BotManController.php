@@ -20,7 +20,7 @@ class BotManController extends Controller
     	$botman = app('botman');
 
     	//Uncomment to set all hears to wit.ai middleware
-    	//$botman->middleware(Wit::create(env('WIT_AI_ACCESS_TOKEN')));
+    	$botman->middleware(Wit::create(env('WIT_AI_ACCESS_TOKEN')));
 
         $botman->hears('get_prayertimes', function (BotMan $bot) {
             $bot->types();

@@ -62,12 +62,11 @@ $botman->hears('get_bot_info', function(BotMan $bot){
         $bot->reply('Also known as, @modulus');
 
 });
-//This block of commands are good old fashioned bot commands
 
 $botman->hears('forget_me', function(Botman $bot){
     $bot->userStorage()->delete();
     $bot->reply('Ok, I\'ve forgotten everything about you.');
-});
+})->middleware($middleware);
 
 //for now start_conversation and set_intro does the same thing. Change in the future.
 //$botman->hears('start_conversation', BotManController::class.'@introConversation')->middleware($middleware);
