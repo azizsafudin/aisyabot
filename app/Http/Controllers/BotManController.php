@@ -48,11 +48,10 @@ class BotManController extends Controller
             $uri    = 'http://www.muis.gov.sg/js/prayertiming_data_new_2017a.js';
             $response = $client->get($uri);
             $yearly = json_decode($response->getBody()->getContents());
-            $today = Carbon::today('Asia/Singapore');
-            $datetoday = Carbon::createFromFormat('d/m/Y', $today);
+            $date = Carbon::today('Asia/Singapore')->format('d/m/Y');
             $prayertime = new Json();
             foreach($yearly['events'] as $daily){
-                if ($daily['date'] == $datetoday){
+                if ($daily['date'] == $date){
                     $prayertime = $daily;
                     break;
                 }
