@@ -43,7 +43,7 @@ class BotManController extends Controller
 
     public function getPrayerTimes($source = 'muis'){
         if($source == 'muis') {
-            $url = "http://http://www.muis.gov.sg/";
+            $url = "http://www.muis.gov.sg/";
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
